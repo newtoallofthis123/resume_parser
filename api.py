@@ -32,20 +32,22 @@ def parse_resume(content):
     You are a resume parser. You will be given a resume in PDF format. Your job is to extract the relevant information from the resume and return it in JSON format.
     Follow this JSON schema:
     {
-  "other": "\"{\\\"Hobbies\\\":\\\"\\\",\\\"Languages\\\":\\\"\\\"}\"",
+  "other": "{"Hobbies":"","Languages":""}",
   "first_name": "first_name",
   "last_name": "last_name",
   "email": "email",
   "phone": "phone",
   "social": {
-    "social_name": "social_name"
+    "link_name1": "link_url1",
+    "link_name2": "link_url2",
+    "link_name3": "link_url3",
   },
   "summary": "summary in the resume",
-  "education": "[{\"degree\":\"degree\",\"institution\":\"institution\",\"start_date\":\"start_date\",\"end_date\":\"end_date\"}]",
   "skills": "comma separated list of skills",
-  "work": "[{\"company\":\"company\",\"position\":\"position\",\"start_date\":\"start_date\",\"end_date\":\"end_date\",\"description\":\"description\"}]",
-  "projects": "[{"\\"name\\\":\\\"name\\\",\\\"description\\\":\\\"description\\\"}]",
-  "achievements": "[{\"name\":\"name\",\"description\":\"description\"}]",
+  "work": "[{"id": "generate a random id","company":"company","title":"title","startDate":"start_date","endDate":"end_date","description":"description"}]",
+  "education": "[{"id": "generate a random id","degree":"degree","institution":"institution","startDate":"start_date","endDate":"end_date"}]",
+  "projects": "[{"id": "generate a random id","name":"name","description":"description"}]",
+  "achievements": "[{"id": "generate a random id","name":"name","description":"description"}]",
 }
     """
     file = types.Part.from_bytes(data=content, mime_type="application/pdf")
