@@ -11,6 +11,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 import tempfile
+import json_repair
 
 load_dotenv()
 
@@ -82,12 +83,17 @@ async def parse_pdf(file: UploadFile = File(...)) -> dict:
         )
 
     try:
+        res = {}
         file_content = file.file.read()
-
         parsed_data = parse_resume(file_content)
+        res = json_repair.loads(parsed_data, logging=True)
+        res["other"] = json_repair.loads(res["other"])
+        res["work"] = json_repair.loads(res["work"])
+        res["education"] = json_repair.loads(res["education"])
+        res["projects"] = json_repair.loads(res["projects"])
+        res["achievements"] = json_repair.loads(res["achievements"])
 
-        return {"data": parsed_data}
-
+        return res
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing PDF: {str(e)}")
 
